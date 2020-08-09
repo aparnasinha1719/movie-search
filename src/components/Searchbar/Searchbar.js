@@ -2,9 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-const type = [
+import axios from 'axios';
+const watchTypes = [
   {
-    value: 'all',
+    value: '',
     label: 'All',
   },
   {
@@ -33,25 +34,31 @@ const useStyles = makeStyles((theme) => ({
 
 const Searchbar=()=> {
   const classes = useStyles();
-  const [currency, setCurrency] = React.useState('EUR');
-
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
+  const [type, setType] = React.useState('');
+  const handleTypeChange = (event) => {
+    setType(event.target.value);
   };
+  const handleSearchChange =(event)=>{
+    let url = `http://www.omdbapi.com/?apikey=65ec2d05&s=${event.target.value}&type=${type}&page='2'`;
+    axios.get(url).then((response)=>{
+console.log(response);
+    }).catch((response)=>{
 
+    })
+  }
   return (
     <form className={classes.root} noValidate autoComplete="off">
-        <TextField ></TextField>
+        <TextField onChange={handleSearchChange}></TextField>
         <TextField
           id="outlined-select-type-native"
           select
-          value={currency}
-          onChange={handleChange}
+          value={type}
+          onChange={handleTypeChange}
           SelectProps={{
             native: true,
           }}
         >
-          {type.map((option) => (
+          {watchTypes.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>
