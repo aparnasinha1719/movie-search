@@ -1,9 +1,13 @@
 import React from 'react'
+import MovieCard from '../MovieCard/MovieCard';
+import classes from './CardWrapper.module.css';
+const CardWrapper=(props)=>{
 
-const CardWrapper=()=>{
     return (
-        <div>
-            
+        <div className={classes.CardWrapper}>
+        {props.moviesList.map((value,key)=>(
+            <MovieCard movie={value} key={key}></MovieCard>
+        ))}
         </div>
     )
 }

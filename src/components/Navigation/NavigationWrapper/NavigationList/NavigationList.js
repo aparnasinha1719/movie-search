@@ -22,7 +22,7 @@ const NavigationItems=()=> {
   return (
    <ul className={classes.root}>
      <NavigationItem link='/'>Home</NavigationItem>
-     <NavigationItem link='/favorites'>Favorites</NavigationItem> 
+     <NavigationItem link='/favourites'>Favourites</NavigationItem> 
    </ul>
   );
 }

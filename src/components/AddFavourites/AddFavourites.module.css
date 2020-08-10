@@ -1,0 +1,14 @@
+.favouriteBtn{
+    stroke: gray;
+    fill:white !important;
+    stroke-width: 2px;
+    position: absolute;
+    padding: 4px 0 0 10px;
+    cursor:pointer;
+}
+
+.addFavourite{
+    stroke:rgb(220, 0, 78);
+    fill:rgb(220, 0, 78) !important;
+    
+}
