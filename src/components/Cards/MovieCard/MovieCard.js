@@ -63,7 +63,7 @@ const MovieCard=(props)=> {
     <AddFavourites movieDetails={props.movie}></AddFavourites>
       <div className={classes.details}>
         <CardContent className={classes.content}>
-          <Link className={classes.heading} to={{pathname:"/favourites/details",state:{
+          <Link className={classes.heading} to={{pathname:"/details",state:{
             id:props.movie.imdbID
           }}} >
             {props.movie.Title}
@@ -73,7 +73,7 @@ const MovieCard=(props)=> {
           </Typography>
         </CardContent>
         <div className={classes.controls}>
-          <Link to={{pathname:"/favourites/details",state:{
+          <Link to={{pathname:"/details",state:{
             id:props.movie.imdbId
           }}} className={classes.link}>Details</Link>
         </div>

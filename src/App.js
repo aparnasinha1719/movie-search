@@ -15,7 +15,7 @@ function App() {
     <Switch>
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/favourites" component={Favourites}></Route>
-          <Route exact path="/favourites/details" component={MovieDetails}></Route>
+          <Route exact path="/details" component={MovieDetails}></Route>
     </Switch>
     </Layout>
     </Router>
