@@ -4,57 +4,85 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import classes from './AddFavourites.module.css';
 const AddFavourites = (props) => {
 	let movieId = props.movieDetails.imdbID;
+	console.log("props.movieDetails ",props.movieDetails.imdbID);
 	const [status, setStatus] = useState(false);
-	const [statusArray,setStatusArray]=useState()
+	const [click, setClick] = useState(false);
 	let favouriteArray = localStorage.getItem('favourites') ? JSON.parse(localStorage.getItem('favourites')) : [];
-	console.log(status);
 	useEffect(() => {
 		// localStorage.clear('favourites')
 		// console.log(favouriteArray);
 
-		if (status === true) {
-			addFavourite();
-		} else if(favouriteArray.length!==0){
-			removeFavourites();
+		if (click){
+			if (status === true) {
+				addFavourite();
+			} else if (favouriteArray.length !== 0) {
+				removeFavourites();
+			}
 		}
+		
+		
 	}, [status]);
+
+
+	useEffect(() => {
+	
+		 if(!click){
+			changeFillColor()
+
+		 }
+		
+		
+	}, [movieId]);
 	// function to check and modify status & favourite list on button click
 	const handleStatusChange = () => {
 		let demo = status;
+		setClick(true)
+
 		setStatus(!demo);
-		console.log(status);
+
 	};
+
 	const getIndex = () => {
+		// console.log("movie id in get index ",movieId);
+		// console.log("favouriteArray ",favouriteArray.length);
 		for (let x = 0; x < favouriteArray.length; x++) {
+			
 			if (favouriteArray[x].imdbID === movieId) {
-				return x;
+				console.log('x ', x);
+				return { index: x, add: true };
 			}
 		}
+		return {};
 	};
 	//function add favourite to favourite list
 	const addFavourite = () => {
-
 		if (favouriteArray) {
 			favouriteArray.push(props.movieDetails);
 			localStorage.setItem('favourites', JSON.stringify(favouriteArray));
-		console.log('add',JSON.parse(localStorage.getItem('favourites')));
-
 		}
 	};
 	//function add favourite from movie favourites list
 	const removeFavourites = () => {
 		if (favouriteArray) {
-			let index=getIndex();
+			let index = getIndex().index;
 			favouriteArray.splice(index, 1);
 			localStorage.setItem('favourites', JSON.stringify(favouriteArray));
-		console.log('remove',JSON.parse(localStorage.getItem('favourites')));
-
 		}
 	};
+
+	const changeFillColor = () => {
+
+		if (getIndex().add){
+			setStatus(true)
+		}
+
+
+	}
+
 	return (
 		<FavoriteIcon
 			onClick={handleStatusChange}
-			className={`${classes.favouriteBtn} ${status? classes.addFavourite : ''}`}
+			className={`${classes.favouriteBtn} ${status ? classes.addFavourite : ''}`}
 		></FavoriteIcon>
 	);
 };
