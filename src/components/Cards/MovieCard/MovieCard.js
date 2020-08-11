@@ -7,8 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import AddFavourites from '../../AddFavourites/AddFavourites';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
-
+import defaultImg from '../../../assets/imgs/default-img.jpg';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -23,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   heading:{
+    color:'rgb(85, 26, 139)',
     fontSize:'1.25rem'
   },
   details: {
@@ -80,7 +80,7 @@ const MovieCard=(props)=> {
       </div>
       <CardMedia
         className={classes.cover}
-        image={props.movie.Poster}
+        image={props.movie.Poster==='N/A'?defaultImg:props.movie.Poster}
         title="Live from space album cover"
       />
     </Card>

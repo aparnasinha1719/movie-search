@@ -3,42 +3,60 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import classes from './AddFavourites.module.css';
 const AddFavourites = (props) => {
+	let movieId = props.movieDetails.imdbID;
 	const [status, setStatus] = useState(false);
-	let favouriteArray = localStorage.getItem('favourites')?JSON.parse(localStorage.getItem('favourites')):[];
+	const [statusArray,setStatusArray]=useState()
+	let favouriteArray = localStorage.getItem('favourites') ? JSON.parse(localStorage.getItem('favourites')) : [];
+	console.log(status);
 	useEffect(() => {
-		localStorage.clear('favourites')
-		if (status === true) {
+		// localStorage.clear('favourites')
+		// console.log(favouriteArray);
 
+		if (status === true) {
 			addFavourite();
-		} else {
-			removeFavourites()
+		} else if(favouriteArray.length!==0){
+			removeFavourites();
 		}
-    }, [status]);
+	}, [status]);
 	// function to check and modify status & favourite list on button click
 	const handleStatusChange = () => {
 		let demo = status;
-        setStatus(!demo);
-        // console.log(status);
-
+		setStatus(!demo);
+		console.log(status);
+	};
+	const getIndex = () => {
+		for (let x = 0; x < favouriteArray.length; x++) {
+			if (favouriteArray[x].imdbID === movieId) {
+				return x;
+			}
+		}
 	};
 	//function add favourite to favourite list
 	const addFavourite = () => {
-        if (favouriteArray) {
-		favouriteArray.push(props.movieDetails);
-		console.log(favouriteArray);
-        localStorage.setItem('favourites', JSON.stringify(favouriteArray));
-        }
+
+		if (favouriteArray) {
+			favouriteArray.push(props.movieDetails);
+			localStorage.setItem('favourites', JSON.stringify(favouriteArray));
+		console.log('add',JSON.parse(localStorage.getItem('favourites')));
+
+		}
 	};
 	//function add favourite from movie favourites list
 	const removeFavourites = () => {
-		let favouriteArray = JSON.parse(localStorage.getItem('favourites'));
 		if (favouriteArray) {
-		console.log(favouriteArray);
+			let index=getIndex();
+			favouriteArray.splice(index, 1);
+			localStorage.setItem('favourites', JSON.stringify(favouriteArray));
+		console.log('remove',JSON.parse(localStorage.getItem('favourites')));
 
-			favouriteArray.splice(favouriteArray.indexOf(props.movieDetails), 1);
 		}
 	};
-	return <FavoriteIcon onClick={handleStatusChange} className={`${classes.favouriteBtn} ${status?classes.addFavourite:''}` }></FavoriteIcon>;
+	return (
+		<FavoriteIcon
+			onClick={handleStatusChange}
+			className={`${classes.favouriteBtn} ${status? classes.addFavourite : ''}`}
+		></FavoriteIcon>
+	);
 };
 
 export default AddFavourites;

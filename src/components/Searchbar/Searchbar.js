@@ -80,7 +80,7 @@ const Searchbar = (props) => {
 	};
 	const handleSearchChange = (value) => {
     setFilterText(value);
-		let url = `http://www.omdbapi.com/?apikey=65ec2d05&s=${value}&type=${type}&page='2'`;
+		let url = `http://www.omdbapi.com/?apikey=65ec2d05&s=${value}&type=${type}&page='1'`;
 		axios
 			.get(url)
 			.then((response) => {
