@@ -68,13 +68,19 @@ const useStyles = makeStyles((theme) => ({
     '&:hover':{
       background:'#6f8e48'
     }
+  },
+  error:{
+	margin: '11px 0 0',
+    color: 'rgb(220, 0, 78)'
   }
 }));
 
 const Searchbar = (props) => {
+	let errorContent=null;
 	const classes = useStyles();
-  const [type, setType] = React.useState('');
-  const [filterText, setFilterText] = React.useState('');
+	  const [type, setType] = React.useState('');
+	  const [error, setError] = React.useState({status:false,message:''});
+  	const [filterText, setFilterText] = React.useState('');
 	const handleTypeChange = (event) => {
 		setType(event.target.value);
 	};
@@ -84,13 +90,25 @@ const Searchbar = (props) => {
 		axios
 			.get(url)
 			.then((response) => {
-				// console.log(response);
-				if(response.data.Search){
+				console.log(response);
+				if(response.data.Response==='True'){
+					setError({status:false,message:''});
 					props.getMovies(response.data.Search);
+				}else{
+					props.getMovies([]);
+					if(value.length<3){
+						errorContent='Type atleast 3 character for better result';
+					}else{
+						errorContent='No result with this title';
+					}
+					setError({status:true,message:errorContent});
 
 				}
 			})
-			.catch((response) => {});
+			.catch((response) => {
+				setError({status:true,message:response.data.Error});
+
+			});
 	};
 	return (
 		<form className={classes.root} noValidate autoComplete="off">
@@ -115,6 +133,7 @@ const Searchbar = (props) => {
 					))}
 				</TextField>
 			</div>
+			{error.status?(<div className={classes.error}>{error.message}</div>):''}
 			<Button variant="contained"  className={classes.searchBtn} 
       onClick={()=>handleSearchChange(filterText)}>
 				Search

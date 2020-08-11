@@ -4,14 +4,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import classes from './AddFavourites.module.css';
 const AddFavourites = (props) => {
 	let movieId = props.movieDetails.imdbID;
-	console.log("props.movieDetails ",props.movieDetails.imdbID);
 	const [status, setStatus] = useState(false);
 	const [click, setClick] = useState(false);
 	let favouriteArray = localStorage.getItem('favourites') ? JSON.parse(localStorage.getItem('favourites')) : [];
 	useEffect(() => {
-		// localStorage.clear('favourites')
-		// console.log(favouriteArray);
-
 		if (click){
 			if (status === true) {
 				addFavourite();
@@ -19,32 +15,23 @@ const AddFavourites = (props) => {
 				removeFavourites();
 			}
 		}
-		
-		
 	}, [status]);
 
 
 	useEffect(() => {
-	
 		 if(!click){
 			changeFillColor()
-
-		 }
-		
-		
+		 }	
 	}, [movieId]);
 	// function to check and modify status & favourite list on button click
 	const handleStatusChange = () => {
 		let demo = status;
-		setClick(true)
-
+		setClick(true);
 		setStatus(!demo);
 
 	};
 
 	const getIndex = () => {
-		// console.log("movie id in get index ",movieId);
-		// console.log("favouriteArray ",favouriteArray.length);
 		for (let x = 0; x < favouriteArray.length; x++) {
 			
 			if (favouriteArray[x].imdbID === movieId) {
@@ -71,12 +58,9 @@ const AddFavourites = (props) => {
 	};
 
 	const changeFillColor = () => {
-
 		if (getIndex().add){
 			setStatus(true)
 		}
-
-
 	}
 
 	return (
